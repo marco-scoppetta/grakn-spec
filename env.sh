@@ -10,7 +10,9 @@ else
 fi
 mkdir -p $CACHE_DIR
 
-GRAKN_RELEASE='grakn-dist-0.13.0'
+VERSION="0.13.0"
+
+GRAKN_RELEASE="grakn-dist-${VERSION}"
 
 GRAKN_TAR="${GRAKN_RELEASE}.tar.gz"
 
@@ -20,7 +22,7 @@ case $1 in
     start)
         set -e
 
-        DOWNLOAD_URL="https://github.com/graknlabs/grakn/releases/download/v0.13.0/${GRAKN_TAR}"
+        DOWNLOAD_URL="https://github.com/graknlabs/grakn/releases/download/v${VERSION}/${GRAKN_TAR}"
 
         set +e
         nc -z localhost 4567
@@ -48,7 +50,7 @@ case $1 in
         mv "${TEMP_DIR}/${GRAKN_RELEASE}" "$GRAKN_DIR"
 
         "${GRAKN_DIR}/bin/grakn.sh" start
-        sleep 5
+        sleep 5  # TODO: remove this when `grakn.sh start` blocks
 
         GRAQL_FILE_OF_TYPES_AND_INSTANCES="${GRAKN_DIR}/examples/pokemon.gql"
 
