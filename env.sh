@@ -65,4 +65,8 @@ case $1 in
 
         rm -rf "$TEMP_DIR"
         ;;
+    *)
+        >&2 echo 'Valid commands are `start` and `stop`'
+        exit 1
+        ;;
 esac
