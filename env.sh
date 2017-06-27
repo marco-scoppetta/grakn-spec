@@ -29,7 +29,7 @@ case $1 in
         set +e
         nc -z localhost 4567
         PORT_IN_USE=$?
-        set -euo pipefail
+        set -e
 
         if [ $PORT_IN_USE -eq 0 ]; then
             >&2 echo "Port 4567 is in use. Maybe a Grakn server is already running?"
