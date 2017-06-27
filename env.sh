@@ -3,7 +3,7 @@
 set -euo pipefail
 
 if [ -d "$HOME/Library/Caches" ] ; then
-    CACHE_DIR="$HOME/Library/Caches/SuperApp"
+    CACHE_DIR="$HOME/Library/Caches/grakn-spec"
 elif [ -d "$HOME/.cache" ] ; then
     CACHE_DIR="$HOME/.cache/grakn-spec"
 else
