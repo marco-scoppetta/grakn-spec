@@ -27,34 +27,29 @@ Feature: Graql Queries
         Then Return an error
 
 
-  @skip
     Scenario: Match Query With Empty Response
 		When The user issues a match query which should not have results
     	Then Return an empty response
 
 
-  @skip
     Scenario: Match Query With Non-Empty Response
 		When The user issues a match query which should have results
     	Then Return a response with matching concepts
 
 
-  @skip
     Scenario: Successful Delete Query
         Given An empty type
         When The user deletes the type
         Then Return a response
 
 
-  @skip
     Scenario: Unsuccessful Delete Query
-        Given A Type With instances
+        Given A type with instances
         When The user deletes the type
         Then Return an error
 
 
-  @skip
-    Scenario: Delete Query for non Existant Concept
-        When The user delete a concept
-        And The concept does not exist
+    Scenario: Delete Query for non Existent Concept
+        Given A concept that does not exist
+        When The user deletes the concept
         Then Return a response
