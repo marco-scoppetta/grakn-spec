@@ -2,7 +2,9 @@ Feature: Graql Queries
   As a Grakn Developer, I should be able to interact with a Grakn Graph using Graql queries
 
     Background: A graph containing types and instances
-        Given A graph containing types and instances
+        Given a graph
+        And ontology `person sub entity, has name; name sub resource, datatype string;`
+        And data `$alice isa person, has name "Alice";`
 
     Scenario: Valid Insert Query for Types
         Given A type that does not exist
