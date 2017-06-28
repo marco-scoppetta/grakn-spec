@@ -28,13 +28,23 @@ Feature: Graql Queries
 
 
     Scenario: Match Query With Empty Response
-		When The user issues a match query which should not have results
-    	Then Return an empty response
+        When The user issues a match query which should not have results
+        Then Return an empty response
 
 
     Scenario: Match Query With Non-Empty Response
-		When The user issues a match query which should have results
-    	Then Return a response with matching concepts
+        When The user issues a match query which should have results
+        Then Return a response with matching concepts
+
+
+    Scenario: Ask Query With False Response
+        When The user executes `match $x has name "Chicken"; ask;`
+        Then Return `False`
+
+
+    Scenario: Ask Query With True Response
+        When The user executes `match $x isa pokemon; ask;`
+        Then Return `True`
 
 
     Scenario: Successful Delete Query
