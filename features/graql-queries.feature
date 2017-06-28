@@ -40,13 +40,13 @@ Feature: Graql Queries
 
 
     Scenario: Ask Query With False Response
-        When The user executes `match $x has name "Chicken"; ask;`
-        Then Return `False`
+        When The user issues `match $x has name "Precy"; ask;`
+        Then The response is `False`
 
 
     Scenario: Ask Query With True Response
-        When The user executes `match $x isa pokemon; ask;`
-        Then Return `True`
+        When The user issues `match $x has name "Alice"; ask;`
+        Then The response is `True`
 
 
     Scenario: Successful Delete Query
