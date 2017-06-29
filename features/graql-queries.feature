@@ -49,6 +49,11 @@ Feature: Graql Queries
         Then The response is `True`
 
 
+    Scenario: Aggregate Query
+        When The user issues `match $x isa person; aggregate count;`
+        Then The response is `1`
+
+
     Scenario: Successful Delete Query
         Given An empty type
         When The user deletes the type
