@@ -54,6 +54,11 @@ Feature: Graql Queries
         Then The response is `1`
 
 
+    Scenario: Compute Query
+        When The user issues `compute count in person;`
+        Then The response is `1`
+
+
     Scenario: Successful Delete Query
         Given An empty type
         When The user deletes the type
