@@ -2,7 +2,9 @@ Feature: Graql Queries
   As a Grakn Developer, I should be able to interact with a Grakn Graph using Graql queries
 
     Background: A graph containing types and instances
-        Given A graph containing types and instances
+        Given a graph
+        And ontology `person sub entity, has name; name sub resource, datatype string;`
+        And data `$alice isa person, has name "Alice";`
 
     Scenario: Valid Insert Query for Types
         Given A type that does not exist
@@ -28,13 +30,33 @@ Feature: Graql Queries
 
 
     Scenario: Match Query With Empty Response
-		When The user issues a match query which should not have results
-    	Then Return an empty response
+        When The user issues a match query which should not have results
+        Then Return an empty response
 
 
     Scenario: Match Query With Non-Empty Response
-		When The user issues a match query which should have results
-    	Then Return a response with matching concepts
+        When The user issues a match query which should have results
+        Then Return a response with matching concepts
+
+
+    Scenario: Ask Query With False Response
+        When The user issues `match $x has name "Precy"; ask;`
+        Then The response is `False`
+
+
+    Scenario: Ask Query With True Response
+        When The user issues `match $x has name "Alice"; ask;`
+        Then The response is `True`
+
+
+    Scenario: Aggregate Query
+        When The user issues `match $x isa person; aggregate count;`
+        Then The response is `1`
+
+
+    Scenario: Compute Query
+        When The user issues `compute count in person;`
+        Then The response is `1`
 
 
     Scenario: Successful Delete Query

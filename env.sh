@@ -48,10 +48,6 @@ case $1 in
 
         "${GRAKN_DIR}/bin/grakn.sh" start
         sleep 5  # TODO: remove this when `grakn.sh start` blocks
-
-        GRAQL_FILE_OF_TYPES_AND_INSTANCES="${GRAKN_DIR}/examples/pokemon.gql"
-
-        "${GRAKN_DIR}/bin/graql.sh" -f "$GRAQL_FILE_OF_TYPES_AND_INSTANCES"
         ;;
     stop)
         "${GRAKN_DIR}/bin/grakn.sh" stop
