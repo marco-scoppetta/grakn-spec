@@ -4,7 +4,7 @@ Feature: Client
 
     Scenario: Issuing a query with a broken connection
         Given A broken connection to the database
-        When The user issues a query
+        When The user issues `match $x sub entity;`
         Then Return an error
 
     @skip

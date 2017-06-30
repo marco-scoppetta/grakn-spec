@@ -7,35 +7,31 @@ Feature: Graql Queries
         And data `$alice isa person, has name "Alice";`
 
     Scenario: Valid Insert Query for Types
-        Given A type that does not exist
-        When The user inserts the type
-        Then The type is in the graph
+        When The user issues `insert $x label dog sub entity;`
+        Then The type "dog" is in the graph
         And Return a response with new concepts
 
     Scenario: Redundant Insert Query
-        Given A type that already exists
-        When The user inserts the type
+        When The user issues `insert $x label person sub entity;`
         Then Return a response with existing concepts
 
     Scenario: Valid Insert Query for Instances
-        Given A type that already exists
-        When The user inserts an instance of the type
-        Then The instance is in the graph
+        When The user issues `insert $bob isa person, has name "Bob";`
+        Then The instance with name "Bob" is in the graph
         And Return a response with new concepts
 
     Scenario: Invalid Insert Query
-        Given A type that does not exist
-        When The user inserts an instance of the type
+        When The user issues `insert $dunstan isa dog, has name "Dunstan";`
         Then Return an error
 
 
     Scenario: Match Query With Empty Response
-        When The user issues a match query which should not have results
+        When The user issues `match $x isa person, has name "Precy";`
         Then Return an empty response
 
 
     Scenario: Match Query With Non-Empty Response
-        When The user issues a match query which should have results
+        When The user issues `match $x isa person, has name "Alice";`
         Then Return a response with matching concepts
 
 
@@ -60,18 +56,16 @@ Feature: Graql Queries
 
 
     Scenario: Successful Delete Query
-        Given An empty type
-        When The user deletes the type
+        Given ontology `dog sub entity;`
+        When The user issues `match $x label dog; delete $x;`
         Then Return a response
 
 
     Scenario: Unsuccessful Delete Query
-        Given A type with instances
-        When The user deletes the type
+        When The user issues `match $x label person; delete $x;`
         Then Return an error
 
 
     Scenario: Delete Query for non Existent Concept
-        Given A concept that does not exist
-        When The user deletes the concept
+        When The user issues `match $x has name "Precy"; delete $x;`
         Then Return a response
