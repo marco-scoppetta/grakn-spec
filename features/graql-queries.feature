@@ -7,71 +7,56 @@ Feature: Graql Queries
         And data `$alice isa person, has name "Alice";`
 
     Scenario: Valid Insert Query for Types
-        Given A type that does not exist
-        When The user inserts the type
-        Then The type is in the graph
-        And Return a response with new concepts
+        When the user issues `insert $x label dog sub entity;`
+        Then the type "dog" is in the graph
+        And return a response with new concepts
 
     Scenario: Redundant Insert Query
-        Given A type that already exists
-        When The user inserts the type
-        Then Return a response with existing concepts
+        When the user issues `insert $x label person sub entity;`
+        Then return a response with existing concepts
 
     Scenario: Valid Insert Query for Instances
-        Given A type that already exists
-        When The user inserts an instance of the type
-        Then The instance is in the graph
-        And Return a response with new concepts
+        When the user issues `insert $bob isa person, has name "Bob";`
+        Then the instance with name "Bob" is in the graph
+        And return a response with new concepts
 
     Scenario: Invalid Insert Query
-        Given A type that does not exist
-        When The user inserts an instance of the type
-        Then Return an error
-
+        When the user issues `insert $dunstan isa dog, has name "Dunstan";`
+        Then return an error
 
     Scenario: Match Query With Empty Response
-        When The user issues a match query which should not have results
-        Then Return an empty response
-
+        When the user issues `match $x isa person, has name "Precy";`
+        Then the response has no results
 
     Scenario: Match Query With Non-Empty Response
-        When The user issues a match query which should have results
-        Then Return a response with matching concepts
-
+        When the user issues `match $x isa person, has name "Alice";`
+        Then the response has 1 result
 
     Scenario: Ask Query With False Response
-        When The user issues `match $x has name "Precy"; ask;`
-        Then The response is `False`
-
+        When the user issues `match $x has name "Precy"; ask;`
+        Then the response is `False`
 
     Scenario: Ask Query With True Response
-        When The user issues `match $x has name "Alice"; ask;`
-        Then The response is `True`
-
+        When the user issues `match $x has name "Alice"; ask;`
+        Then the response is `True`
 
     Scenario: Aggregate Query
-        When The user issues `match $x isa person; aggregate count;`
-        Then The response is `1`
-
+        When the user issues `match $x isa person; aggregate count;`
+        Then the response is `1`
 
     Scenario: Compute Query
-        When The user issues `compute count in person;`
-        Then The response is `1`
-
+        When the user issues `compute count in person;`
+        Then the response is `1`
 
     Scenario: Successful Delete Query
-        Given An empty type
-        When The user deletes the type
-        Then Return a response
-
+        Given ontology `dog sub entity;`
+        When the user issues `match $x label dog; delete $x;`
+        Then the response is empty
 
     Scenario: Unsuccessful Delete Query
-        Given A type with instances
-        When The user deletes the type
-        Then Return an error
-
+        When the user issues `match $x label person; delete $x;`
+        Then return an error
 
     Scenario: Delete Query for non Existent Concept
-        Given A concept that does not exist
-        When The user deletes the concept
-        Then Return a response
+        When the user issues `match $x has name "Precy"; delete $x;`
+        Then the response is empty

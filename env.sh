@@ -20,6 +20,9 @@ GRAKN_TAR="${GRAKN_RELEASE}.tar.gz"
 
 GRAKN_DIR="${CACHE_DIR}/grakn"
 
+# Simple keyspace counter so we have a fresh keyspace whenever
+KEYSPACE_FILE="${CACHE_DIR}"/keyspace
+
 case $1 in
     start)
         set -e
@@ -46,12 +49,45 @@ case $1 in
 
         mv "${CACHE_DIR}/${GRAKN_RELEASE}" "$GRAKN_DIR"
 
+        echo "0" > $KEYSPACE_FILE
+
         "${GRAKN_DIR}/bin/grakn.sh" start
         sleep 5  # TODO: remove this when `grakn.sh start` blocks
         ;;
     stop)
         "${GRAKN_DIR}/bin/grakn.sh" stop
         rm -rf "$GRAKN_DIR"
+        ;;
+    keyspace)
+        KEYSPACE=$(<$KEYSPACE_FILE)
+        KEYSPACE=$((KEYSPACE+1))
+        echo $KEYSPACE > $KEYSPACE_FILE
+        echo "k$KEYSPACE"
+        ;;
+    insert)
+        KEYSPACE=$(<$KEYSPACE_FILE)
+        "${GRAKN_DIR}/bin/graql.sh" -k "k$KEYSPACE" -e "insert $2"
+        ;;
+    check)
+        KEYSPACE=$(<$KEYSPACE_FILE)
+        case $2 in
+            type)
+                QUERY="match \$x label $3; ask;"
+                ;;
+            instance)
+                QUERY="match \$x has $3 '$4'; ask;"
+                ;;
+            *)
+                >&2 echo 'Valid commands are `type` and `instance`'
+                exit 1
+                ;;
+        esac
+        RESPONSE=`${GRAKN_DIR}/bin/graql.sh -k "k$KEYSPACE" -o json -e "$QUERY"`
+        if [ "$RESPONSE" = 'true' ]; then
+            exit 0
+        else
+            exit 1
+        fi
         ;;
     *)
         >&2 echo 'Valid commands are `start` and `stop`'
