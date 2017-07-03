@@ -3,18 +3,18 @@ Feature: Client
 
 
     Scenario: Issuing a query with a broken connection
-        Given A broken connection to the database
-        When The user issues `match $x sub entity;`
-        Then Return an error
+        Given a broken connection to the database
+        When the user issues `match $x sub entity;`
+        Then return an error
 
     @skip
     Scenario: Creating a connection to a graph
-        Given A graph which exists
-        When The user connects to the graph
-        Then Return a usable connection
+        Given a graph which exists
+        When the user connects to the graph
+        Then return a usable connection
 
     @skip
     Scenario: Creating a connection to a non-existant graph
-        Given A graph which does not exist
-        When The user connects to the graph
-        Then Create a new graph
+        Given a graph which does not exist
+        When the user connects to the graph
+        Then create a new graph
