@@ -26,11 +26,11 @@ Feature: Graql Queries
 
     Scenario: Match Query With Empty Response
         When The user issues `match $x isa person, has name "Precy";`
-        Then Return an empty response
+        Then The response has no results
 
     Scenario: Match Query With Non-Empty Response
         When The user issues `match $x isa person, has name "Alice";`
-        Then Return a response with matching concepts
+        Then The response has 1 result
 
     Scenario: Ask Query With False Response
         When The user issues `match $x has name "Precy"; ask;`
@@ -51,7 +51,7 @@ Feature: Graql Queries
     Scenario: Successful Delete Query
         Given ontology `dog sub entity;`
         When The user issues `match $x label dog; delete $x;`
-        Then Return a response
+        Then The response is empty
 
     Scenario: Unsuccessful Delete Query
         When The user issues `match $x label person; delete $x;`
@@ -59,4 +59,4 @@ Feature: Graql Queries
 
     Scenario: Delete Query for non Existent Concept
         When The user issues `match $x has name "Precy"; delete $x;`
-        Then Return a response
+        Then The response is empty
