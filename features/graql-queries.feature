@@ -24,47 +24,38 @@ Feature: Graql Queries
         When The user issues `insert $dunstan isa dog, has name "Dunstan";`
         Then Return an error
 
-
     Scenario: Match Query With Empty Response
         When The user issues `match $x isa person, has name "Precy";`
         Then Return an empty response
-
 
     Scenario: Match Query With Non-Empty Response
         When The user issues `match $x isa person, has name "Alice";`
         Then Return a response with matching concepts
 
-
     Scenario: Ask Query With False Response
         When The user issues `match $x has name "Precy"; ask;`
         Then The response is `False`
-
 
     Scenario: Ask Query With True Response
         When The user issues `match $x has name "Alice"; ask;`
         Then The response is `True`
 
-
     Scenario: Aggregate Query
         When The user issues `match $x isa person; aggregate count;`
         Then The response is `1`
 
-
     Scenario: Compute Query
         When The user issues `compute count in person;`
         Then The response is `1`
-
 
     Scenario: Successful Delete Query
         Given ontology `dog sub entity;`
         When The user issues `match $x label dog; delete $x;`
         Then Return a response
 
-
     Scenario: Unsuccessful Delete Query
         When The user issues `match $x label person; delete $x;`
         Then Return an error
-
 
     Scenario: Delete Query for non Existent Concept
         When The user issues `match $x has name "Precy"; delete $x;`
