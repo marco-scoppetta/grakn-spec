@@ -12,12 +12,6 @@ else
 fi
 mkdir -p $CACHE_DIR
 
-VERSION="0.13.0"
-
-GRAKN_RELEASE="grakn-dist-${VERSION}"
-
-GRAKN_TAR="${GRAKN_RELEASE}.tar.gz"
-
 GRAKN_DIR="${CACHE_DIR}/grakn"
 
 # Simple keyspace counter so we have a fresh keyspace whenever
@@ -25,7 +19,9 @@ KEYSPACE_FILE="${CACHE_DIR}"/keyspace
 
 case $1 in
     start)
-        set -e
+        VERSION=$2
+        GRAKN_RELEASE="grakn-dist-${VERSION}"
+        GRAKN_TAR="${GRAKN_RELEASE}.tar.gz"
 
         DOWNLOAD_URL="https://github.com/graknlabs/grakn/releases/download/v${VERSION}/${GRAKN_TAR}"
 
