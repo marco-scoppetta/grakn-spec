@@ -41,7 +41,7 @@ case $1 in
             wget -O "$DOWNLOAD_PATH" "$DOWNLOAD_URL"
         fi
 
-        tar -xvf "${DOWNLOAD_PATH}" -C "${CACHE_DIR}"
+        tar -xf "${DOWNLOAD_PATH}" -C "${CACHE_DIR}"
 
         mv "${CACHE_DIR}/${GRAKN_RELEASE}" "$GRAKN_DIR"
 
