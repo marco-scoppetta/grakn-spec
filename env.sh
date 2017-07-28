@@ -23,7 +23,14 @@ case $1 in
         GRAKN_RELEASE="grakn-dist-${VERSION}"
         GRAKN_TAR="${GRAKN_RELEASE}.tar.gz"
 
-        DOWNLOAD_URL="https://github.com/graknlabs/grakn/releases/download/v${VERSION}/${GRAKN_TAR}"
+        # If version just contains numbers and dots, it's a release
+        if [[ $VERSION =~ ^[0-9.]+$ ]]; then
+            DOWNLOAD_URL="https://github.com/graknlabs/grakn/releases/download/v${VERSION}/${GRAKN_TAR}"
+            IS_RELEASE=true
+        else
+            DOWNLOAD_URL="https://jenkins.grakn.ai/job/grakn/job/${VERSION}/lastSuccessfulBuild/artifact/grakn-dist/target/${GRAKN_TAR}"
+            IS_RELEASE=false
+        fi
 
         set +e
         nc -z localhost 4567
@@ -37,7 +44,7 @@ case $1 in
 
         DOWNLOAD_PATH="${CACHE_DIR}/${GRAKN_TAR}"
 
-        if [ ! -f "$DOWNLOAD_PATH" ] ; then
+        if [ ! $IS_RELEASE ] || [ ! -f "$DOWNLOAD_PATH" ] ; then
             wget -O "$DOWNLOAD_PATH" "$DOWNLOAD_URL"
         fi
 
