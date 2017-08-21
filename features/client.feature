@@ -8,13 +8,13 @@ Feature: Client
         Then return an error
 
     @skip
-    Scenario: Creating a connection to a graph
-        Given a graph which exists
-        When the user connects to the graph
+    Scenario: Creating a connection to a knowledge base
+        Given a knowledge base which exists
+        When the user connects to the knowledge base
         Then return a usable connection
 
     @skip
-    Scenario: Creating a connection to a non-existant graph
-        Given a graph which does not exist
-        When the user connects to the graph
-        Then create a new graph
+    Scenario: Creating a connection to a non-existant knowledge base
+        Given a knowledge base which does not exist
+        When the user connects to the knowledge base
+        Then create a new knowledge base

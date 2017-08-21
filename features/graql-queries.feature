@@ -1,14 +1,14 @@
 Feature: Graql Queries
-  As a Grakn Developer, I should be able to interact with a Grakn Graph using Graql queries
+  As a Grakn Developer, I should be able to interact with a Grakn knowledge base using Graql queries
 
-    Background: A graph containing types and instances
-        Given a graph
-        And ontology `person sub entity, has name; name sub resource, datatype string;`
+    Background: A knowledge base containing types and instances
+        Given a knowledge base
+        And schema `person sub entity, has name; name sub attribute, datatype string;`
         And data `$alice isa person, has name "Alice";`
 
     Scenario: Valid Insert Query for Types
         When the user issues `insert $x label dog sub entity;`
-        Then the type "dog" is in the graph
+        Then the type "dog" is in the knowledge base
         And return a response with new concepts
 
     Scenario: Redundant Insert Query
@@ -17,7 +17,7 @@ Feature: Graql Queries
 
     Scenario: Valid Insert Query for Instances
         When the user issues `insert $bob isa person, has name "Bob";`
-        Then the instance with name "Bob" is in the graph
+        Then the instance with name "Bob" is in the knowledge base
         And return a response with new concepts
 
     Scenario: Invalid Insert Query
