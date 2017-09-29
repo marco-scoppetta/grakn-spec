@@ -49,7 +49,7 @@ Feature: Graql Queries
         Then the response is `1`
 
     Scenario: Successful Delete Query
-        Given ontology `dog sub entity;`
+        Given schema `dog sub entity;`
         When the user issues `match $x label dog; delete $x;`
         Then the response is empty
 
