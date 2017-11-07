@@ -17,6 +17,14 @@ GRAKN_DIR="${CACHE_DIR}/grakn"
 # Simple keyspace counter so we have a fresh keyspace whenever
 KEYSPACE_FILE="${CACHE_DIR}"/keyspace
 
+function graql() {
+    if [ -f "${GRAKN_DIR}/bin/graql.sh" ]; then
+        "${GRAKN_DIR}/bin/graql.sh" "$@"
+    else
+        "${GRAKN_DIR}/graql" console "$@"
+    fi
+}
+
 case $1 in
     start)
         VERSION=$2
@@ -80,23 +88,27 @@ case $1 in
         ;;
     insert)
         KEYSPACE=$(<$KEYSPACE_FILE)
-        "${GRAKN_DIR}/bin/graql.sh" -k "k$KEYSPACE" -e "insert $2"
+        graql -k "k$KEYSPACE" -e "insert $2"
+        ;;
+    define)
+        KEYSPACE=$(<$KEYSPACE_FILE)
+        graql -k "k$KEYSPACE" -e "define $2"
         ;;
     check)
         KEYSPACE=$(<$KEYSPACE_FILE)
         case $2 in
             type)
-                QUERY="match \$x label $3; ask;"
+                QUERY="match \$x label $3; aggregate ask;"
                 ;;
             instance)
-                QUERY="match \$x has $3 '$4'; ask;"
+                QUERY="match \$x has $3 '$4'; aggregate ask;"
                 ;;
             *)
                 >&2 echo 'Valid commands are `type` and `instance`'
                 exit 1
                 ;;
         esac
-        RESPONSE=`${GRAKN_DIR}/bin/graql.sh -k "k$KEYSPACE" -o json -e "$QUERY"`
+        RESPONSE=`graql -k "k$KEYSPACE" -o json -e "$QUERY"`
         if [ "$RESPONSE" = 'true' ]; then
             exit 0
         else
