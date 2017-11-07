@@ -60,3 +60,14 @@ Feature: Graql Queries
     Scenario: Delete Query for non Existent Concept
         When the user issues `match $x has name "Precy"; delete $x;`
         Then the response is empty
+
+    Scenario: Inference off by default
+        Given schema `weird-rule sub rule when { $person has name "Alice"; } then { $person has name "A"; };`
+        When the user issues `match $x has name "A"; get;`
+        Then the response has no results
+
+    Scenario: Inference can be enabled
+        Given schema `weird-rule sub rule when { $person has name "Alice"; } then { $person has name "A"; };`
+        And inference is enabled
+        When the user issues `match $x has name "A"; get;`
+        Then the response has 1 result
