@@ -54,11 +54,22 @@ case $1 in
 
         echo "0" > $KEYSPACE_FILE
 
-        "${GRAKN_DIR}/bin/grakn.sh" start
-        sleep 5  # TODO: remove this when `grakn.sh start` blocks
+        if [ -f "${GRAKN_DIR}/bin/grakn.sh" ]; then
+            "${GRAKN_DIR}/bin/grakn.sh" start
+            sleep 5  # TODO: remove this when `grakn.sh start` blocks
+        else 
+            "${GRAKN_DIR}/grakn" server start
+        fi
+
+        echo "Add the following to your path:"
+        echo "${GRAKN_DIR}/bin"
         ;;
     stop)
-        "${GRAKN_DIR}/bin/grakn.sh" stop
+        if [ -f "${GRAKN_DIR}/bin/grakn.sh" ]; then
+            "${GRAKN_DIR}/bin/grakn.sh" stop
+        else
+            "${GRAKN_DIR}/grakn" server stop
+        fi
         rm -rf "$GRAKN_DIR"
         ;;
     keyspace)
