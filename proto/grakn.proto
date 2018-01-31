@@ -43,7 +43,7 @@ message Commit {}
 */
 message ExecQuery {
     Query query = 1;
-    Infer infer = 2;
+    Infer infer = 2; // If this is not present, leave at server default.
 }
 
 /*
@@ -62,12 +62,9 @@ message Stop {}
 
 /*
     Toggle inference for this query.
-    If `isSet` is false, then the value is ignored and the default on the server is used.
-    This allows us to have a server-side default value that is not dictated by the client.
 */
 message Infer {
-    bool isSet = 1;
-    bool value = 2;
+    bool value = 1;
 }
 
 message TxResponse {
