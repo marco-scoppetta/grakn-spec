@@ -17,6 +17,7 @@ message TxRequest {
         ExecQuery execQuery = 3;
         Next next = 4;
         Stop stop = 5;
+        GetLabel getLabel = 6;
     }
 }
 
@@ -39,7 +40,7 @@ message Commit {}
     Command to start executing a query.
     The server will return a `QueryResult` or a `Done` message.
     After returning a `QueryResult` message, the server will accept a `Next` or `Stop` message.
-    After returnin a `Done` message, the server will accept a command message.
+    After returning a `Done` message, the server will accept a command message.
 */
 message ExecQuery {
     Query query = 1;
@@ -50,7 +51,7 @@ message ExecQuery {
     Request next query result.
     The server will return a `QueryResult` or a `Done` message.
     After returning a `QueryResult` message, the server will accept a `Next` or `Stop` message.
-    After returnin a `Done` message, the server will accept a command message.
+    After returning a `Done` message, the server will accept a command message.
 */
 message Next {}
 
@@ -59,6 +60,14 @@ message Next {}
     After this message, the server will send a `Done` message and then accept a command message.
 */
 message Stop {}
+
+/*
+    Ask the server for the label of a concept.
+    After this message, the server will send a `Label` message and then accept a command message.
+*/
+message GetLabel {
+    ConceptId id = 1;
+}
 
 /*
     Toggle inference for this query.
@@ -71,6 +80,7 @@ message TxResponse {
     oneof response {
         QueryResult queryResult = 1;
         Done done = 2;
+        Label label = 3;
     }
 }
 
@@ -90,7 +100,20 @@ message QueryResult {
 message Done {}
 
 message Concept {
-    string id = 1;
+    ConceptId id = 1;
+    BaseType baseType = 2;
+}
+
+enum BaseType {
+    Entity = 0;
+    Relationship = 1;
+    Attribute = 2;
+    EntityType = 3;
+    RelationshipType = 4;
+    AttributeType = 5;
+    Role = 6;
+    Rule = 7;
+    MetaType = 8; // This represents the top-level meta type only
 }
 
 /*
@@ -122,6 +145,14 @@ message Keyspace {
 }
 
 message Query {
+    string value = 1;
+}
+
+message ConceptId {
+    string value = 1;
+}
+
+message Label {
     string value = 1;
 }
 
