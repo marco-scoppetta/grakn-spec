@@ -17,7 +17,7 @@ message TxRequest {
         ExecQuery execQuery = 3;
         Next next = 4;
         Stop stop = 5;
-        GetLabel getLabel = 6;
+        GetConceptProperty getConceptProperty = 6;
     }
 }
 
@@ -62,11 +62,24 @@ message Next {}
 message Stop {}
 
 /*
-    Ask the server for the label of a concept.
-    After this message, the server will send a `Label` message and then accept a command message.
+    Ask the server for a property of a concept.
+    After this message, the server will send a `ConceptPropertyValue` message and then accept a command message.
 */
-message GetLabel {
+message GetConceptProperty {
     ConceptId id = 1;
+    ConceptProperty conceptProperty = 2;
+}
+
+enum ConceptProperty {
+    ValueProperty = 0;
+    DataTypeProperty = 1;
+    LabelProperty = 2;
+    IsImplicit = 3;
+    IsInferred = 4;
+    IsAbstract = 5;
+    When = 6;
+    Then = 7;
+    Regex = 8;
 }
 
 /*
@@ -80,7 +93,7 @@ message TxResponse {
     oneof response {
         QueryResult queryResult = 1;
         Done done = 2;
-        Label label = 3;
+        ConceptPropertyValue conceptPropertyValue = 3;
     }
 }
 
@@ -98,6 +111,42 @@ message QueryResult {
     Tells the client we have completed their command.
 */
 message Done {}
+
+message ConceptPropertyValue {
+    oneof value {
+        AttributeValue attributeValue = 1;
+        DataType dataType = 2;
+        Label label = 3;
+        bool isImplicit = 4;
+        bool isInferred = 5;
+        bool isAbstract = 6;
+        Pattern when = 7;
+        Pattern then = 8;
+        string regex = 9;
+    }
+}
+
+enum DataType {
+    String = 0;
+    Boolean = 1;
+    Integer = 2;
+    Long = 3;
+    Float = 4;
+    Double = 5;
+    Date = 6;
+}
+
+message AttributeValue {
+    oneof value {
+        string string = 1;
+        bool boolean = 2;
+        int32 integer = 3;
+        int64 long = 4;
+        float float = 5;
+        double double = 6;
+        int64 date = 7; // time since epoch in milliseconds
+    }
+}
 
 message Concept {
     ConceptId id = 1;
@@ -148,6 +197,10 @@ message Query {
     string value = 1;
 }
 
+message Pattern {
+    string value = 1;
+}
+
 message ConceptId {
     string value = 1;
 }
@@ -155,4 +208,3 @@ message ConceptId {
 message Label {
     string value = 1;
 }
-
