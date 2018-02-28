@@ -38,9 +38,7 @@ message Commit {}
 
 /*
     Command to start executing a query.
-    The server will return a `QueryResult` or a `Done` message.
-    After returning a `QueryResult` message, the server will accept a `Next` or `Stop` message.
-    After returning a `Done` message, the server will accept a command message.
+    After this message, the server will send an `Iterator` message and then accept a command message.
 */
 message ExecQuery {
     Query query = 1;
@@ -49,17 +47,19 @@ message ExecQuery {
 
 /*
     Request next query result.
-    The server will return a `QueryResult` or a `Done` message.
-    After returning a `QueryResult` message, the server will accept a `Next` or `Stop` message.
-    After returning a `Done` message, the server will accept a command message.
+    After this message, the server will send a `QueryResult` or a `Done` message and then accept a command message.
 */
-message Next {}
+message Next {
+    IteratorId iteratorId = 1;
+}
 
 /*
     Tell the server we have finished executing a query.
     After this message, the server will send a `Done` message and then accept a command message.
 */
-message Stop {}
+message Stop {
+    IteratorId iteratorId = 1;
+}
 
 /*
     Ask the server for a property of a concept.
@@ -94,6 +94,7 @@ message TxResponse {
         QueryResult queryResult = 1;
         Done done = 2;
         ConceptPropertyValue conceptPropertyValue = 3;
+        IteratorId iteratorId = 4;
     }
 }
 
@@ -207,4 +208,8 @@ message ConceptId {
 
 message Label {
     string value = 1;
+}
+
+message IteratorId {
+    int32 id = 1;
 }
