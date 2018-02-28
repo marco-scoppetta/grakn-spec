@@ -83,6 +83,7 @@ enum ConceptProperty {
     When = 6;
     Then = 7;
     Regex = 8;
+    AllRolePlayersProperty = 9;
 }
 
 /*
@@ -127,6 +128,7 @@ message ConceptPropertyValue {
         Pattern when = 7;
         Pattern then = 8;
         string regex = 9;
+        AllRolePlayers allRolePlayers = 10;
     }
 }
 
@@ -185,6 +187,15 @@ enum BaseType {
 */
 message Answer {
     map<string, Concept> answer = 1;
+}
+
+message AllRolePlayers {
+    repeated RolePlayer rolePlayer = 1;
+}
+
+message RolePlayer {
+    Concept role = 1;
+    Concept player = 2;
 }
 
 enum TxType {
