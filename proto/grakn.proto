@@ -28,6 +28,9 @@ message TxRequest {
 message Open {
     Keyspace keyspace = 1;
     TxType txType = 2;
+    /* Fields ignored in the open-source version. */
+    string username = 3;
+    string password = 4;
 }
 
 /*
