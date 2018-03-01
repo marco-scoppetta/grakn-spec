@@ -84,6 +84,8 @@ enum ConceptProperty {
     Then = 7;
     Regex = 8;
     AllRolePlayersProperty = 9;
+    AttributeTypes = 10;
+    KeyTypes = 11;
 }
 
 /*
@@ -129,6 +131,9 @@ message ConceptPropertyValue {
         Pattern then = 8;
         string regex = 9;
         AllRolePlayers allRolePlayers = 10;
+        // TODO: make these properties streamable
+        Concepts attributeTypes = 11;
+        Concepts keyTypes = 12;
     }
 }
 
@@ -152,6 +157,10 @@ message AttributeValue {
         double double = 6;
         int64 date = 7; // time since epoch in milliseconds
     }
+}
+
+message Concepts {
+    repeated Concept concept = 1;
 }
 
 message Concept {
