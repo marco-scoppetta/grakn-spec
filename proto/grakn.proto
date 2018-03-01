@@ -86,6 +86,8 @@ enum ConceptProperty {
     AllRolePlayersProperty = 9;
     AttributeTypes = 10;
     KeyTypes = 11;
+    DirectType = 12;
+    DirectSuper = 13;
 }
 
 /*
@@ -134,6 +136,8 @@ message ConceptPropertyValue {
         // TODO: make these properties streamable
         Concepts attributeTypes = 11;
         Concepts keyTypes = 12;
+        Concept directType = 13;
+        Concept directSuper = 14;
     }
 }
 
