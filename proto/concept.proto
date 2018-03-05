@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+package ai.grakn.rpc.generated;
+
+message Concept {
+    ConceptId id = 1;
+    BaseType baseType = 2;
+}
+
+message ConceptId {
+    string value = 1;
+}
+
+enum BaseType {
+    Entity = 0;
+    Relationship = 1;
+    Attribute = 2;
+    EntityType = 3;
+    RelationshipType = 4;
+    AttributeType = 5;
+    Role = 6;
+    Rule = 7;
+    MetaType = 8; // This represents the top-level meta type only
+}
+
+enum ConceptMethod {
+    GetValue = 0;
+    GetDataType = 1;
+    GetLabel = 2;
+    IsImplicit = 3;
+    IsInferred = 4;
+    IsAbstract = 5;
+    GetWhen = 6;
+    GetThen = 7;
+    GetRegex = 8;
+    GetAllRolePlayers = 9;
+    GetAttributeTypes = 10;
+    GetKeyTypes = 11;
+    GetDirectType = 12;
+    GetDirectSuper = 13;
+}
+
+message ConceptResponse {
+    oneof value {
+        AttributeValue attributeValue = 1;
+        DataType dataType = 2;
+        Label label = 3;
+        bool bool = 4;
+        Pattern pattern = 5;
+        string string = 6;
+        RolePlayers rolePlayers = 7;
+        // TODO: make these properties streamable
+        Concepts concepts = 8;
+        Concept concept = 9;
+    }
+}
+
+message AttributeValue {
+    oneof value {
+        string string = 1;
+        bool boolean = 2;
+        int32 integer = 3;
+        int64 long = 4;
+        float float = 5;
+        double double = 6;
+        int64 date = 7; // time since epoch in milliseconds
+    }
+}
+
+enum DataType {
+    String = 0;
+    Boolean = 1;
+    Integer = 2;
+    Long = 3;
+    Float = 4;
+    Double = 5;
+    Date = 6;
+}
+
+message Label {
+    string value = 1;
+}
+
+message Pattern {
+    string value = 1;
+}
+
+message RolePlayers {
+    repeated RolePlayer rolePlayer = 1;
+}
+
+message RolePlayer {
+    Concept role = 1;
+    Concept player = 2;
+}
+
+message Concepts {
+    repeated Concept concept = 1;
+}
