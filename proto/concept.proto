@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package ai.grakn.rpc.generated;
+option java_outer_classname = "GrpcConcept";
 
 message Concept {
     ConceptId id = 1;
