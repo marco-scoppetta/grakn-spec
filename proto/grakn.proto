@@ -22,7 +22,7 @@ message TxRequest {
         ExecQuery execQuery = 3;
         Next next = 4;
         Stop stop = 5;
-        GetConceptProperty getConceptProperty = 6;
+        RunConceptMethod runConceptMethod = 6;
     }
 }
 
@@ -76,29 +76,29 @@ message Stop {
 }
 
 /*
-    Ask the server for a property of a concept.
-    After this message, the server will send a `ConceptPropertyValue` message and then accept a command message.
+    Run a concept method on a concept.
+    After this message, the server will send a `ConceptResponse` message and then accept a command message.
 */
-message GetConceptProperty {
+message RunConceptMethod {
     ConceptId id = 1;
-    ConceptProperty conceptProperty = 2;
+    ConceptMethod conceptMethod = 2;
 }
 
-enum ConceptProperty {
-    ValueProperty = 0;
-    DataTypeProperty = 1;
-    LabelProperty = 2;
+enum ConceptMethod {
+    GetValue = 0;
+    GetDataType = 1;
+    GetLabel = 2;
     IsImplicit = 3;
     IsInferred = 4;
     IsAbstract = 5;
-    When = 6;
-    Then = 7;
-    Regex = 8;
-    AllRolePlayersProperty = 9;
-    AttributeTypes = 10;
-    KeyTypes = 11;
-    DirectType = 12;
-    DirectSuper = 13;
+    GetWhen = 6;
+    GetThen = 7;
+    GetRegex = 8;
+    GetAllRolePlayers = 9;
+    GetAttributeTypes = 10;
+    GetKeyTypes = 11;
+    GetDirectType = 12;
+    GetDirectSuper = 13;
 }
 
 /*
@@ -112,7 +112,7 @@ message TxResponse {
     oneof response {
         QueryResult queryResult = 1;
         Done done = 2;
-        ConceptPropertyValue conceptPropertyValue = 3;
+        ConceptResponse conceptResponse = 3;
         IteratorId iteratorId = 4;
     }
 }
@@ -132,23 +132,18 @@ message QueryResult {
 */
 message Done {}
 
-message ConceptPropertyValue {
+message ConceptResponse {
     oneof value {
         AttributeValue attributeValue = 1;
         DataType dataType = 2;
         Label label = 3;
-        bool isImplicit = 4;
-        bool isInferred = 5;
-        bool isAbstract = 6;
-        Pattern when = 7;
-        Pattern then = 8;
-        string regex = 9;
-        AllRolePlayers allRolePlayers = 10;
+        bool bool = 4;
+        Pattern pattern = 5;
+        string string = 6;
+        RolePlayers rolePlayers = 7;
         // TODO: make these properties streamable
-        Concepts attributeTypes = 11;
-        Concepts keyTypes = 12;
-        Concept directType = 13;
-        Concept directSuper = 14;
+        Concepts concepts = 8;
+        Concept concept = 9;
     }
 }
 
@@ -213,7 +208,7 @@ message Answer {
     map<string, Concept> answer = 1;
 }
 
-message AllRolePlayers {
+message RolePlayers {
     repeated RolePlayer rolePlayer = 1;
 }
 
