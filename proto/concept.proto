@@ -24,22 +24,27 @@ enum BaseType {
     MetaType = 8; // This represents the top-level meta type only
 }
 
-enum ConceptMethod {
-    GetValue = 0;
-    GetDataType = 1;
-    GetLabel = 2;
-    IsImplicit = 3;
-    IsInferred = 4;
-    IsAbstract = 5;
-    GetWhen = 6;
-    GetThen = 7;
-    GetRegex = 8;
-    GetAllRolePlayers = 9;
-    GetAttributeTypes = 10;
-    GetKeyTypes = 11;
-    GetDirectType = 12;
-    GetDirectSuper = 13;
+message ConceptMethod {
+    oneof conceptMethod {
+        Unit getValue = 1;
+        Unit getDataType = 2;
+        Unit getLabel = 3;
+        Unit isImplicit = 4;
+        Unit isInferred = 5;
+        Unit isAbstract = 6;
+        Unit getWhen = 7;
+        Unit getThen = 8;
+        Unit getRegex = 9;
+        Unit getAllRolePlayers = 10;
+        Unit getAttributeTypes = 11;
+        Unit getKeyTypes = 12;
+        Unit getDirectType = 13;
+        Unit getDirectSuper = 14;
+    }
 }
+
+// Represents a message with no information
+message Unit {}
 
 message ConceptResponse {
     oneof value {
