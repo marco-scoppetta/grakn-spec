@@ -26,6 +26,8 @@ enum BaseType {
 
 message ConceptMethod {
     oneof conceptMethod {
+        // The types here are the arguments for the methods. Most are `Unit`, which indicates no arguments.
+        // The return types of these methods are described in `ConceptResponse`.
         Unit getValue = 1;
         Unit getDataType = 2;
         Unit getLabel = 3;
@@ -40,6 +42,7 @@ message ConceptMethod {
         Unit getKeyTypes = 12;
         Unit getDirectType = 13;
         Unit getDirectSuper = 14;
+        RolePlayer removeRolePlayer = 15;
     }
 }
 
@@ -58,6 +61,7 @@ message ConceptResponse {
         // TODO: make these properties streamable
         Concepts concepts = 8;
         Concept concept = 9;
+        Unit unit = 10;
     }
 }
 
