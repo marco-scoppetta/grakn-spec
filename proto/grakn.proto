@@ -1,6 +1,9 @@
 syntax = "proto3";
 
 package ai.grakn.rpc.generated;
+option java_outer_classname = "GrpcGrakn";
+
+import "concept.proto";
 
 service Grakn {
     /*
@@ -8,6 +11,11 @@ service Grakn {
         When the call is completed, the transaction will always be closed, with or without a `Commit` message.
     */
     rpc Tx (stream TxRequest) returns (stream TxResponse);
+
+    /*
+        Delete a keyspace.
+    */
+    rpc Delete (DeleteRequest) returns (DeleteResponse);
 }
 
 message TxRequest {
@@ -17,9 +25,15 @@ message TxRequest {
         ExecQuery execQuery = 3;
         Next next = 4;
         Stop stop = 5;
-        GetConceptProperty getConceptProperty = 6;
+        RunConceptMethod runConceptMethod = 6;
     }
 }
+
+message DeleteRequest {
+    Open open = 1; // This open request describes how to open the transaction in order to delete the keyspace
+}
+
+message DeleteResponse {}
 
 /*
     Open a transaction on a keyspace. This must be the first message sent.
@@ -65,24 +79,12 @@ message Stop {
 }
 
 /*
-    Ask the server for a property of a concept.
-    After this message, the server will send a `ConceptPropertyValue` message and then accept a command message.
+    Run a concept method on a concept.
+    After this message, the server will send a `ConceptResponse` message and then accept a command message.
 */
-message GetConceptProperty {
+message RunConceptMethod {
     ConceptId id = 1;
-    ConceptProperty conceptProperty = 2;
-}
-
-enum ConceptProperty {
-    ValueProperty = 0;
-    DataTypeProperty = 1;
-    LabelProperty = 2;
-    IsImplicit = 3;
-    IsInferred = 4;
-    IsAbstract = 5;
-    When = 6;
-    Then = 7;
-    Regex = 8;
+    ConceptMethod conceptMethod = 2;
 }
 
 /*
@@ -96,7 +98,7 @@ message TxResponse {
     oneof response {
         QueryResult queryResult = 1;
         Done done = 2;
-        ConceptPropertyValue conceptPropertyValue = 3;
+        ConceptResponse conceptResponse = 3;
         IteratorId iteratorId = 4;
     }
 }
@@ -115,59 +117,6 @@ message QueryResult {
     Tells the client we have completed their command.
 */
 message Done {}
-
-message ConceptPropertyValue {
-    oneof value {
-        AttributeValue attributeValue = 1;
-        DataType dataType = 2;
-        Label label = 3;
-        bool isImplicit = 4;
-        bool isInferred = 5;
-        bool isAbstract = 6;
-        Pattern when = 7;
-        Pattern then = 8;
-        string regex = 9;
-    }
-}
-
-enum DataType {
-    String = 0;
-    Boolean = 1;
-    Integer = 2;
-    Long = 3;
-    Float = 4;
-    Double = 5;
-    Date = 6;
-}
-
-message AttributeValue {
-    oneof value {
-        string string = 1;
-        bool boolean = 2;
-        int32 integer = 3;
-        int64 long = 4;
-        float float = 5;
-        double double = 6;
-        int64 date = 7; // time since epoch in milliseconds
-    }
-}
-
-message Concept {
-    ConceptId id = 1;
-    BaseType baseType = 2;
-}
-
-enum BaseType {
-    Entity = 0;
-    Relationship = 1;
-    Attribute = 2;
-    EntityType = 3;
-    RelationshipType = 4;
-    AttributeType = 5;
-    Role = 6;
-    Rule = 7;
-    MetaType = 8; // This represents the top-level meta type only
-}
 
 /*
     Represents an answer to a `get`, `insert` or `define` query. e.g.
@@ -198,18 +147,6 @@ message Keyspace {
 }
 
 message Query {
-    string value = 1;
-}
-
-message Pattern {
-    string value = 1;
-}
-
-message ConceptId {
-    string value = 1;
-}
-
-message Label {
     string value = 1;
 }
 

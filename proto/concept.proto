@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+package ai.grakn.rpc.generated;
+option java_outer_classname = "GrpcConcept";
+
+message Concept {
+    ConceptId id = 1;
+    BaseType baseType = 2;
+}
+
+message ConceptId {
+    string value = 1;
+}
+
+enum BaseType {
+    Entity = 0;
+    Relationship = 1;
+    Attribute = 2;
+    EntityType = 3;
+    RelationshipType = 4;
+    AttributeType = 5;
+    Role = 6;
+    Rule = 7;
+    MetaType = 8; // This represents the top-level meta type only
+}
+
+message ConceptMethod {
+    oneof conceptMethod {
+        // The types here are the arguments for the methods. Most are `Unit`, which indicates no arguments.
+        // The return types of these methods are described in `ConceptResponse`.
+        Unit getValue = 1;
+        Unit getDataType = 2;
+        Unit getLabel = 3;
+        Unit isImplicit = 4;
+        Unit isInferred = 5;
+        Unit isAbstract = 6;
+        Unit getWhen = 7;
+        Unit getThen = 8;
+        Unit getRegex = 9;
+        Unit getAllRolePlayers = 10;
+        Unit getAttributeTypes = 11;
+        Unit getKeyTypes = 12;
+        Unit getDirectType = 13;
+        Unit getDirectSuper = 14;
+        RolePlayer removeRolePlayer = 15;
+    }
+}
+
+// Represents a message with no information
+message Unit {}
+
+message ConceptResponse {
+    oneof value {
+        AttributeValue attributeValue = 1;
+        DataType dataType = 2;
+        Label label = 3;
+        bool bool = 4;
+        Pattern pattern = 5;
+        string string = 6;
+        RolePlayers rolePlayers = 7;
+        // TODO: make these properties streamable
+        Concepts concepts = 8;
+        Concept concept = 9;
+        Unit unit = 10;
+    }
+}
+
+message AttributeValue {
+    oneof value {
+        string string = 1;
+        bool boolean = 2;
+        int32 integer = 3;
+        int64 long = 4;
+        float float = 5;
+        double double = 6;
+        int64 date = 7; // time since epoch in milliseconds
+    }
+}
+
+enum DataType {
+    String = 0;
+    Boolean = 1;
+    Integer = 2;
+    Long = 3;
+    Float = 4;
+    Double = 5;
+    Date = 6;
+}
+
+message Label {
+    string value = 1;
+}
+
+message Pattern {
+    string value = 1;
+}
+
+message RolePlayers {
+    repeated RolePlayer rolePlayer = 1;
+}
+
+message RolePlayer {
+    Concept role = 1;
+    Concept player = 2;
+}
+
+message Concepts {
+    repeated Concept concept = 1;
+}
