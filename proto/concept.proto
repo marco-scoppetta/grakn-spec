@@ -43,6 +43,7 @@ message ConceptMethod {
         Unit getDirectType = 13;
         Unit getDirectSuper = 14;
         RolePlayer removeRolePlayer = 15;
+        Unit delete = 16;
     }
 }
 
