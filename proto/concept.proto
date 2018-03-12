@@ -66,9 +66,9 @@ message ConceptMethod {
         Unit addEntity = 34;
 
         // Relationship type
-        Unit getRolesRelated = 36;
-        Concept setRoleRelated = 37;
-        Concept usnetRoleRelated = 38;
+        Unit getRelatedRoles = 36;
+        Concept setRelatedRole = 37;
+        Concept usnetRelatedRole = 38;
 
         // Attribute type
         AttributeValue putAttribute = 32;
@@ -80,17 +80,20 @@ message ConceptMethod {
         // Thing
         Unit isInferred = 5;
         Unit getDirectType = 13;
-        Unit getRelationships = 39; // TODO: handle roles argument
+        Unit getRelationships = 39;
+        Concepts getRelationshipsByRoles = 48;
         Unit getRolesPlayedByThing = 40;
-        Unit getAttributes = 41; // TODO: handle attribute types argument
+        Unit getAttributes = 41;
+        Concepts getAttributesByTypes = 49;
         Unit getKeys = 42;
+        Concepts getKeysByTypes = 50;
         Concept setAttribute = 43;
         Concept unsetAttribute = 44;
 
         // Relationship
         Unit addRelationship = 35;
-        Unit getAllRolePlayers = 10;
-        Unit getRolePlayers = 45; // TODO: handle roles argument
+        Unit getRolePlayers = 10;
+        Concepts getRolePlayersByRoles = 51;
         RolePlayer setRolePlayer = 46;
         RolePlayer unsetRolePlayer = 15;
 
