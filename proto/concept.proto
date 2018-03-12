@@ -75,7 +75,7 @@ message ConceptMethod {
         AttributeValue getAttribute = 33;
         Unit getDataType = 2;
         Unit getRegex = 9;
-        string setRegex = 31; // TODO: how to handle null
+        Regex setRegex = 31;
 
         // Thing
         Unit isInferred = 5;
@@ -116,6 +116,7 @@ message ConceptResponse {
         Concepts concepts = 8;
         Concept concept = 9;
         Unit unit = 10;
+        Regex regex = 11;
     }
 }
 
@@ -160,4 +161,8 @@ message RolePlayer {
 
 message Concepts {
     repeated Concept concept = 1;
+}
+
+message Regex {
+    string value = 1;
 }
