@@ -38,6 +38,7 @@ message ConceptMethod {
         Label setLabel = 18;
         Unit isImplicit = 4;
         Unit getSubConcepts = 19;
+        Unit getSuperConcepts = 53;
         Unit getDirectSuperConcept = 14;
         Concept setDirectSuperConcept = 17;
 
