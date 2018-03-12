@@ -28,22 +28,75 @@ message ConceptMethod {
     oneof conceptMethod {
         // The types here are the arguments for the methods. Most are `Unit`, which indicates no arguments.
         // The return types of these methods are described in `ConceptResponse`.
-        Unit getValue = 1;
-        Unit getDataType = 2;
+
+        // Concept
+        Unit delete = 16;
+
+        // Schema concept
         Unit getLabel = 3;
+        Label setLabel = 18;
         Unit isImplicit = 4;
-        Unit isInferred = 5;
-        Unit isAbstract = 6;
+        Unit getSubConcepts = 19;
+        Unit getDirectSuperConcept = 14;
+        Concept setDirectSuperConcept = 17;
+
+        // Rule
         Unit getWhen = 7;
         Unit getThen = 8;
-        Unit getRegex = 9;
-        Unit getAllRolePlayers = 10;
+
+        // Role
+        Unit getRelationshipTypesThatRelateRole = 20;
+        Unit getTypesThatPlayRole = 21;
+
+        // Type
+        Unit getInstances = 30;
         Unit getAttributeTypes = 11;
+        Concept setAttributeType = 25;
+        Concept unsetAttributeType = 26;
         Unit getKeyTypes = 12;
+        Concept setKeyType = 27;
+        Concept unsetKeyType = 28;
+        Unit isAbstract = 6;
+        bool setAbstract = 22;
+        Unit getRolesPlayedByType = 29;
+        Concept setRolePlayedByType = 23;
+        Concept usetRolePlayedByType = 24;
+
+        // Entity type
+        Unit addEntity = 34;
+
+        // Relationship type
+        Unit getRolesRelated = 36;
+        Concept setRoleRelated = 37;
+        Concept usnetRoleRelated = 38;
+
+        // Attribute type
+        AttributeValue putAttribute = 32;
+        AttributeValue getAttribute = 33;
+        Unit getDataType = 2;
+        Unit getRegex = 9;
+        string setRegex = 31; // TODO: how to handle null
+
+        // Thing
+        Unit isInferred = 5;
         Unit getDirectType = 13;
-        Unit getDirectSuper = 14;
-        RolePlayer removeRolePlayer = 15;
-        Unit delete = 16;
+        Unit getRelationships = 39; // TODO: handle roles argument
+        Unit getRolesPlayedByThing = 40;
+        Unit getAttributes = 41; // TODO: handle attribute types argument
+        Unit getKeys = 42;
+        Concept setAttribute = 43;
+        Concept unsetAttribute = 44;
+
+        // Relationship
+        Unit addRelationship = 35;
+        Unit getAllRolePlayers = 10;
+        Unit getRolePlayers = 45; // TODO: handle roles argument
+        RolePlayer setRolePlayer = 46;
+        RolePlayer unsetRolePlayer = 15;
+
+        // Attribute
+        Unit getValue = 1;
+        Unit getOwners = 47;
     }
 }
 
