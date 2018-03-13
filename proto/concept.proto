@@ -31,7 +31,6 @@ message ConceptMethod {
 
         // Concept
         Unit delete = 16;
-        Unit exists = 52;
 
         // Schema concept
         Unit getLabel = 3;
