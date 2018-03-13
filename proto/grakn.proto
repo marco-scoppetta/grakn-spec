@@ -26,6 +26,7 @@ message TxRequest {
         Next next = 4;
         Stop stop = 5;
         RunConceptMethod runConceptMethod = 6;
+        ConceptId getConcept = 7;
     }
 }
 
