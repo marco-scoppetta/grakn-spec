@@ -69,7 +69,7 @@ message ConceptMethod {
         // Relationship type
         Unit getRelatedRoles = 36;
         Concept setRelatedRole = 37;
-        Concept usnetRelatedRole = 38;
+        Concept unsetRelatedRole = 38;
 
         // Attribute type
         AttributeValue putAttribute = 32;
