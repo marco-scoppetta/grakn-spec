@@ -61,7 +61,7 @@ message ConceptMethod {
         bool setAbstract = 22;
         Unit getRolesPlayedByType = 29;
         Concept setRolePlayedByType = 23;
-        Concept usetRolePlayedByType = 24;
+        Concept unsetRolePlayedByType = 24;
 
         // Entity type
         Unit addEntity = 34;
