@@ -29,78 +29,81 @@ message ConceptMethod {
         // The types here are the arguments for the methods. Most are `Unit`, which indicates no arguments.
         // The return types of these methods are described in `ConceptResponse`.
 
+        // The `returns` indicates what each `ConceptMethod` will return.
+
         // Concept
-        Unit delete = 16;
+        Unit delete = 16; // returns Unit
 
         // Schema concept
-        Unit getLabel = 3;
-        Label setLabel = 18;
-        Unit isImplicit = 4;
-        Unit getSubConcepts = 19;
-        Unit getSuperConcepts = 53;
-        Unit getDirectSuperConcept = 14;
-        Concept setDirectSuperConcept = 17;
+        Unit getLabel = 3; // returns Label
+        Label setLabel = 18; // returns Unit
+        Unit isImplicit = 4; // returns bool
+        Unit getSubConcepts = 19; // returns Concepts
+        Unit getSuperConcepts = 53; // returns Concepts
+        Unit getDirectSuperConcept = 14; // returns OptionalConcept
+        Concept setDirectSuperConcept = 17; // returns Unit
 
         // Rule
-        Unit getWhen = 7;
-        Unit getThen = 8;
+        Unit getWhen = 7; // returns OptionalPattern
+        Unit getThen = 8; // returns OptionalPattern
 
         // Role
-        Unit getRelationshipTypesThatRelateRole = 20;
-        Unit getTypesThatPlayRole = 21;
+        Unit getRelationshipTypesThatRelateRole = 20; // returns Concepts
+        Unit getTypesThatPlayRole = 21; // returns Concepts
 
         // Type
-        Unit getInstances = 30;
-        Unit getAttributeTypes = 11;
+        Unit getInstances = 30; // returns Concepts
+        Unit getAttributeTypes = 11; // returns Concepts
         Concept setAttributeType = 25;
         Concept unsetAttributeType = 26;
-        Unit getKeyTypes = 12;
-        Concept setKeyType = 27;
-        Concept unsetKeyType = 28;
-        Unit isAbstract = 6;
-        bool setAbstract = 22;
-        Unit getRolesPlayedByType = 29;
-        Concept setRolePlayedByType = 23;
-        Concept unsetRolePlayedByType = 24;
+        Unit getKeyTypes = 12; // returns Concepts
+        Concept setKeyType = 27; // returns Unit
+        Concept unsetKeyType = 28; // returns Unit
+        Unit isAbstract = 6; // returns bool
+        bool setAbstract = 22; // returns Unit
+        Unit getRolesPlayedByType = 29; // returns Concepts
+        Concept setRolePlayedByType = 23; // returns Unit
+        Concept unsetRolePlayedByType = 24; // returns Unit
 
         // Entity type
-        Unit addEntity = 34;
+        Unit addEntity = 34; // returns Concept
 
         // Relationship type
-        Unit getRelatedRoles = 36;
-        Concept setRelatedRole = 37;
-        Concept unsetRelatedRole = 38;
+        Unit getRelatedRoles = 36; // returns Concepts
+        Concept setRelatedRole = 37; // returns Unit
+        Concept unsetRelatedRole = 38; // returns Unit
 
         // Attribute type
-        AttributeValue putAttribute = 32;
-        AttributeValue getAttribute = 33;
-        Unit getDataType = 2;
-        Unit getRegex = 9;
-        Regex setRegex = 31;
+        AttributeValue putAttribute = 32; // returns Concept
+        AttributeValue getAttribute = 33; // returns OptionalConcept
+        Unit getDataTypeOfType = 2; // returns OptionalDataType
+        Unit getDataTypeOfAttribute = 54; // returns DataType
+        Unit getRegex = 9; // returns OptionalRegex
+        OptionalRegex setRegex = 31; // returns Unit
 
         // Thing
-        Unit isInferred = 5;
-        Unit getDirectType = 13;
-        Unit getRelationships = 39;
-        Concepts getRelationshipsByRoles = 48;
-        Unit getRolesPlayedByThing = 40;
-        Unit getAttributes = 41;
-        Concepts getAttributesByTypes = 49;
-        Unit getKeys = 42;
-        Concepts getKeysByTypes = 50;
-        Concept setAttribute = 43;
-        Concept unsetAttribute = 44;
+        Unit isInferred = 5; // returns bool
+        Unit getDirectType = 13; // returns Concept
+        Unit getRelationships = 39; // returns Concepts
+        Concepts getRelationshipsByRoles = 48; // returns Concepts
+        Unit getRolesPlayedByThing = 40; // returns Concepts
+        Unit getAttributes = 41; // returns Concepts
+        Concepts getAttributesByTypes = 49; // returns Concepts
+        Unit getKeys = 42; // returns Concepts
+        Concepts getKeysByTypes = 50; // returns Concepts
+        Concept setAttribute = 43; // returns Unit
+        Concept unsetAttribute = 44; // returns Unit
 
         // Relationship
-        Unit addRelationship = 35;
-        Unit getRolePlayers = 10;
-        Concepts getRolePlayersByRoles = 51;
-        RolePlayer setRolePlayer = 46;
-        RolePlayer unsetRolePlayer = 15;
+        Unit addRelationship = 35; // returns Concept
+        Unit getRolePlayers = 10; // returns RolePlayers
+        Concepts getRolePlayersByRoles = 51; // returns Concepts
+        RolePlayer setRolePlayer = 46; // returns Unit
+        RolePlayer unsetRolePlayer = 15; // returns Unit
 
         // Attribute
-        Unit getValue = 1;
-        Unit getOwners = 47;
+        Unit getValue = 1; // returns AttributeValue
+        Unit getOwners = 47; // returns Concepts
     }
 }
 
@@ -113,14 +116,16 @@ message ConceptResponse {
         DataType dataType = 2;
         Label label = 3;
         bool bool = 4;
-        Pattern pattern = 5;
+        OptionalPattern optionalPattern = 5;
         string string = 6;
         RolePlayers rolePlayers = 7;
         // TODO: make these properties streamable
         Concepts concepts = 8;
         Concept concept = 9;
         Unit unit = 10;
-        Regex regex = 11;
+        OptionalRegex optionalRegex = 11;
+        OptionalConcept optionalConcept = 12;
+        OptionalDataType optionalDataType = 13;
     }
 }
 
@@ -150,10 +155,6 @@ message Label {
     string value = 1;
 }
 
-message Pattern {
-    string value = 1;
-}
-
 message RolePlayers {
     repeated RolePlayer rolePlayer = 1;
 }
@@ -167,6 +168,30 @@ message Concepts {
     repeated Concept concept = 1;
 }
 
-message Regex {
-    string value = 1;
+message OptionalConcept {
+    oneof value {
+        Concept present = 1;
+        Unit absent = 2;
+    }
+}
+
+message OptionalRegex {
+    oneof value {
+        string present = 1;
+        Unit absent = 2;
+    }
+}
+
+message OptionalPattern {
+    oneof value {
+        string present = 1;
+        Unit absent = 2;
+    }
+}
+
+message OptionalDataType {
+    oneof value {
+        DataType present = 1;
+        Unit absent = 2;
+    }
 }
