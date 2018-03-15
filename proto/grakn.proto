@@ -27,6 +27,13 @@ message TxRequest {
         Stop stop = 5;
         RunConceptMethod runConceptMethod = 6;
         ConceptId getConcept = 7;
+        Label getSchemaConcept = 8;
+        AttributeValue getAttributesByValue = 9;
+        Label putEntityType = 10;
+        Label putRelationshipType = 11;
+        PutAttributeType putAttributeType = 12;
+        Label putRole = 13;
+        PutRule putRule = 14;
     }
 }
 
@@ -86,6 +93,17 @@ message Stop {
 message RunConceptMethod {
     ConceptId id = 1;
     ConceptMethod conceptMethod = 2;
+}
+
+message PutAttributeType {
+    Label label = 1;
+    DataType dataType = 2;
+}
+
+message PutRule {
+    Label label = 1;
+    Pattern when = 2;
+    Pattern then = 3;
 }
 
 /*

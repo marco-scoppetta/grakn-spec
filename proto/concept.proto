@@ -182,9 +182,13 @@ message OptionalRegex {
     }
 }
 
+message Pattern {
+    string value = 1;
+}
+
 message OptionalPattern {
     oneof value {
-        string present = 1;
+        Pattern present = 1;
         Unit absent = 2;
     }
 }
