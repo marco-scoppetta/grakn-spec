@@ -26,9 +26,9 @@ message TxRequest {
         Next next = 4; // returns QueryResult or Done
         Stop stop = 5; // returns Done
         RunConceptMethod runConceptMethod = 6; // returns ConceptResponse
-        ConceptId getConcept = 7; // returns Concept
-        Label getSchemaConcept = 8; // returns Concept
-        AttributeValue getAttributesByValue = 9; // returns Concept
+        ConceptId getConcept = 7; // returns OptionalConcept
+        Label getSchemaConcept = 8; // returns OptionalConcept
+        AttributeValue getAttributesByValue = 9; // returns Concepts
         Label putEntityType = 10; // returns Concept
         Label putRelationshipType = 11; // returns Concept
         PutAttributeType putAttributeType = 12; // returns Concept
@@ -120,6 +120,8 @@ message TxResponse {
         ConceptResponse conceptResponse = 3;
         IteratorId iteratorId = 4;
         Concept concept = 5;
+        OptionalConcept optionalConcept = 6;
+        Concepts concepts = 7;
     }
 }
 
