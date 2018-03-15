@@ -3,6 +3,8 @@ syntax = "proto3";
 package ai.grakn.rpc.generated;
 option java_outer_classname = "GrpcConcept";
 
+import "iterator.proto";
+
 message Concept {
     ConceptId id = 1;
     BaseType baseType = 2;
@@ -38,8 +40,8 @@ message ConceptMethod {
         Unit getLabel = 3; // returns Label
         Label setLabel = 18; // returns Unit
         Unit isImplicit = 4; // returns bool
-        Unit getSubConcepts = 19; // returns Concepts
-        Unit getSuperConcepts = 53; // returns Concepts
+        Unit getSubConcepts = 19; // returns IteratorId of Concept
+        Unit getSuperConcepts = 53; // returns IteratorId of Concept
         Unit getDirectSuperConcept = 14; // returns OptionalConcept
         Concept setDirectSuperConcept = 17; // returns Unit
 
@@ -48,20 +50,20 @@ message ConceptMethod {
         Unit getThen = 8; // returns OptionalPattern
 
         // Role
-        Unit getRelationshipTypesThatRelateRole = 20; // returns Concepts
-        Unit getTypesThatPlayRole = 21; // returns Concepts
+        Unit getRelationshipTypesThatRelateRole = 20; // returns IteratorId of Concept
+        Unit getTypesThatPlayRole = 21; // returns IteratorId of Concept
 
         // Type
-        Unit getInstances = 30; // returns Concepts
-        Unit getAttributeTypes = 11; // returns Concepts
+        Unit getInstances = 30; // returns IteratorId of Concept
+        Unit getAttributeTypes = 11; // returns IteratorId of Concept
         Concept setAttributeType = 25;
         Concept unsetAttributeType = 26;
-        Unit getKeyTypes = 12; // returns Concepts
+        Unit getKeyTypes = 12; // returns IteratorId of Concept
         Concept setKeyType = 27; // returns Unit
         Concept unsetKeyType = 28; // returns Unit
         Unit isAbstract = 6; // returns bool
         bool setAbstract = 22; // returns Unit
-        Unit getRolesPlayedByType = 29; // returns Concepts
+        Unit getRolesPlayedByType = 29; // returns IteratorId of Concept
         Concept setRolePlayedByType = 23; // returns Unit
         Concept unsetRolePlayedByType = 24; // returns Unit
 
@@ -69,7 +71,7 @@ message ConceptMethod {
         Unit addEntity = 34; // returns Concept
 
         // Relationship type
-        Unit getRelatedRoles = 36; // returns Concepts
+        Unit getRelatedRoles = 36; // returns IteratorId of Concept
         Concept setRelatedRole = 37; // returns Unit
         Concept unsetRelatedRole = 38; // returns Unit
 
@@ -84,26 +86,26 @@ message ConceptMethod {
         // Thing
         Unit isInferred = 5; // returns bool
         Unit getDirectType = 13; // returns Concept
-        Unit getRelationships = 39; // returns Concepts
-        Concepts getRelationshipsByRoles = 48; // returns Concepts
-        Unit getRolesPlayedByThing = 40; // returns Concepts
-        Unit getAttributes = 41; // returns Concepts
-        Concepts getAttributesByTypes = 49; // returns Concepts
-        Unit getKeys = 42; // returns Concepts
-        Concepts getKeysByTypes = 50; // returns Concepts
+        Unit getRelationships = 39; // returns IteratorId of Concept
+        Concepts getRelationshipsByRoles = 48; // returns IteratorId of Concept
+        Unit getRolesPlayedByThing = 40; // returns IteratorId of Concept
+        Unit getAttributes = 41; // returns IteratorId of Concept
+        Concepts getAttributesByTypes = 49; // returns IteratorId of Concept
+        Unit getKeys = 42; // returns IteratorId of Concept
+        Concepts getKeysByTypes = 50; // returns IteratorId of Concept
         Concept setAttribute = 43; // returns Unit
         Concept unsetAttribute = 44; // returns Unit
 
         // Relationship
         Unit addRelationship = 35; // returns Concept
-        Unit getRolePlayers = 10; // returns RolePlayers
-        Concepts getRolePlayersByRoles = 51; // returns Concepts
+        Unit getRolePlayers = 10; // returns IteratorId of RolePlayer
+        Concepts getRolePlayersByRoles = 51; // returns IteratorId of Concept
         RolePlayer setRolePlayer = 46; // returns Unit
         RolePlayer unsetRolePlayer = 15; // returns Unit
 
         // Attribute
         Unit getValue = 1; // returns AttributeValue
-        Unit getOwners = 47; // returns Concepts
+        Unit getOwners = 47; // returns IteratorId of Concept
     }
 }
 
@@ -126,6 +128,7 @@ message ConceptResponse {
         OptionalRegex optionalRegex = 11;
         OptionalConcept optionalConcept = 12;
         OptionalDataType optionalDataType = 13;
+        IteratorId iteratorId = 14;
     }
 }
 
