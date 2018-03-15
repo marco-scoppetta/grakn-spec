@@ -20,20 +20,20 @@ service Grakn {
 
 message TxRequest {
     oneof request {
-        Open open = 1;
-        Commit commit = 2;
-        ExecQuery execQuery = 3;
-        Next next = 4;
-        Stop stop = 5;
-        RunConceptMethod runConceptMethod = 6;
-        ConceptId getConcept = 7;
-        Label getSchemaConcept = 8;
-        AttributeValue getAttributesByValue = 9;
-        Label putEntityType = 10;
-        Label putRelationshipType = 11;
-        PutAttributeType putAttributeType = 12;
-        Label putRole = 13;
-        PutRule putRule = 14;
+        Open open = 1; // returns Done
+        Commit commit = 2; // returns Done
+        ExecQuery execQuery = 3; // returns IteratorId
+        Next next = 4; // returns QueryResult or Done
+        Stop stop = 5; // returns Done
+        RunConceptMethod runConceptMethod = 6; // returns ConceptResponse
+        ConceptId getConcept = 7; // returns Concept
+        Label getSchemaConcept = 8; // returns Concept
+        AttributeValue getAttributesByValue = 9; // returns Concept
+        Label putEntityType = 10; // returns Concept
+        Label putRelationshipType = 11; // returns Concept
+        PutAttributeType putAttributeType = 12; // returns Concept
+        Label putRole = 13; // returns Concept
+        PutRule putRule = 14; // returns Concept
     }
 }
 
@@ -119,6 +119,7 @@ message TxResponse {
         Done done = 2;
         ConceptResponse conceptResponse = 3;
         IteratorId iteratorId = 4;
+        Concept concept = 5;
     }
 }
 
