@@ -120,9 +120,6 @@ message ConceptResponse {
         bool bool = 4;
         OptionalPattern optionalPattern = 5;
         string string = 6;
-        RolePlayers rolePlayers = 7;
-        // TODO: make these properties streamable
-        Concepts concepts = 8;
         Concept concept = 9;
         Unit unit = 10;
         OptionalRegex optionalRegex = 11;

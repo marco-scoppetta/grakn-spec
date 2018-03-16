@@ -106,7 +106,7 @@ message TxResponse {
         IteratorId iteratorId = 4;
         Concept concept = 5;
         OptionalConcept optionalConcept = 6;
-        Concepts concepts = 7;
+        RolePlayer rolePlayer = 7;
     }
 }
 
