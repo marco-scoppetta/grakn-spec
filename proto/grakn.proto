@@ -4,6 +4,7 @@ package ai.grakn.rpc.generated;
 option java_outer_classname = "GrpcGrakn";
 
 import "concept.proto";
+import "iterator.proto";
 
 service Grakn {
     /*
@@ -22,13 +23,13 @@ message TxRequest {
     oneof request {
         Open open = 1; // returns Done
         Commit commit = 2; // returns Done
-        ExecQuery execQuery = 3; // returns IteratorId
+        ExecQuery execQuery = 3; // returns IteratorId of QueryResult
         Next next = 4; // returns QueryResult or Done
         Stop stop = 5; // returns Done
         RunConceptMethod runConceptMethod = 6; // returns ConceptResponse
         ConceptId getConcept = 7; // returns OptionalConcept
         Label getSchemaConcept = 8; // returns OptionalConcept
-        AttributeValue getAttributesByValue = 9; // returns Concepts
+        AttributeValue getAttributesByValue = 9; // returns IteratorId of Concept
         Label putEntityType = 10; // returns Concept
         Label putRelationshipType = 11; // returns Concept
         PutAttributeType putAttributeType = 12; // returns Concept
@@ -71,22 +72,6 @@ message ExecQuery {
 }
 
 /*
-    Request next query result.
-    After this message, the server will send a `QueryResult` or a `Done` message and then accept a command message.
-*/
-message Next {
-    IteratorId iteratorId = 1;
-}
-
-/*
-    Tell the server we have finished executing a query.
-    After this message, the server will send a `Done` message and then accept a command message.
-*/
-message Stop {
-    IteratorId iteratorId = 1;
-}
-
-/*
     Run a concept method on a concept.
     After this message, the server will send a `ConceptResponse` message and then accept a command message.
 */
@@ -121,7 +106,7 @@ message TxResponse {
         IteratorId iteratorId = 4;
         Concept concept = 5;
         OptionalConcept optionalConcept = 6;
-        Concepts concepts = 7;
+        RolePlayer rolePlayer = 7;
     }
 }
 
@@ -170,8 +155,4 @@ message Keyspace {
 
 message Query {
     string value = 1;
-}
-
-message IteratorId {
-    int32 id = 1;
 }
