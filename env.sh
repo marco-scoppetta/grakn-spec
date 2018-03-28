@@ -52,7 +52,7 @@ case $1 in
 
         DOWNLOAD_PATH="${CACHE_DIR}/${GRAKN_TAR}"
 
-        if [ ! $IS_RELEASE ] || [ ! -f "$DOWNLOAD_PATH" ] ; then
+        if [ $IS_RELEASE = false ] || [ ! -f "$DOWNLOAD_PATH" ] ; then
             wget -O "$DOWNLOAD_PATH" "$DOWNLOAD_URL"
         fi
 
