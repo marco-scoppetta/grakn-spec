@@ -23,7 +23,7 @@ message TxRequest {
     oneof request {
         Open open = 1; // returns Done
         Commit commit = 2; // returns Done
-        ExecQuery execQuery = 3; // returns IteratorId of QueryResult
+        ExecQuery execQuery = 3; // returns QueryResult, Done, or IteratorId of QueryResult
         Next next = 4; // returns QueryResult or Done
         Stop stop = 5; // returns Done
         RunConceptMethod runConceptMethod = 6; // returns ConceptResponse
