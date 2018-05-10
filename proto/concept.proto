@@ -37,9 +37,9 @@ message ConceptMethod {
         Unit delete = 16; // returns Unit
 
         // Schema concept
-        Unit getLabel = 3; // returns Label
+        Unit getLabel = 3; // returns ConceptResponse with Label
         Label setLabel = 18; // returns Unit
-        Unit isImplicit = 4; // returns bool
+        Unit isImplicit = 4; // returns ConceptResponse with bool
         Unit getSubConcepts = 19; // returns IteratorId of Concept
         Unit getSuperConcepts = 53; // returns IteratorId of Concept
         Unit getDirectSuperConcept = 14; // returns OptionalConcept
@@ -71,6 +71,7 @@ message ConceptMethod {
         Unit addEntity = 34; // returns Concept
 
         // Relationship type
+        Unit addRelationship = 35; // returns Concept
         Unit getRelatedRoles = 36; // returns IteratorId of Concept
         Concept setRelatedRole = 37; // returns Unit
         Concept unsetRelatedRole = 38; // returns Unit
@@ -79,12 +80,11 @@ message ConceptMethod {
         AttributeValue putAttribute = 32; // returns Concept
         AttributeValue getAttribute = 33; // returns OptionalConcept
         Unit getDataTypeOfType = 2; // returns OptionalDataType
-        Unit getDataTypeOfAttribute = 54; // returns DataType
         Unit getRegex = 9; // returns OptionalRegex
         OptionalRegex setRegex = 31; // returns Unit
 
         // Thing
-        Unit isInferred = 5; // returns bool
+        Unit isInferred = 5; // returns Conceptresponse with bool
         Unit getDirectType = 13; // returns Concept
         Unit getRelationships = 39; // returns IteratorId of Concept
         Concepts getRelationshipsByRoles = 48; // returns IteratorId of Concept
@@ -97,13 +97,13 @@ message ConceptMethod {
         Concept unsetAttribute = 44; // returns Unit
 
         // Relationship
-        Unit addRelationship = 35; // returns Concept
         Unit getRolePlayers = 10; // returns IteratorId of RolePlayer
         Concepts getRolePlayersByRoles = 51; // returns IteratorId of Concept
         RolePlayer setRolePlayer = 46; // returns Unit
         RolePlayer unsetRolePlayer = 15; // returns Unit
 
         // Attribute
+        Unit getDataTypeOfAttribute = 54; // returns DataType
         Unit getValue = 1; // returns AttributeValue
         Unit getOwners = 47; // returns IteratorId of Concept
     }
